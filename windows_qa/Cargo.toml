@@ -1,0 +1,8 @@
+[package]
+name = "rph-windows-qa"
+version = "0.28.0"
+edition = "2021"
+description = "Read-only Windows x64 PE structural preflight for Rust Python Healer"
+publish = false
+
+[dependencies]

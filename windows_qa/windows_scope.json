@@ -1,0 +1,182 @@
+{
+  "schema_version": 1,
+  "baseline_release": "0.27.0",
+  "target": {
+    "windows": "11 Home",
+    "architecture": "x86_64",
+    "gpu": "NVIDIA",
+    "preferred_runner": "GitHub hosted Windows x64 (no GPU assumed)",
+    "python_minors": [
+      "3.9",
+      "3.10",
+      "3.11",
+      "3.12",
+      "3.13",
+      "3.14",
+      "3.15"
+    ]
+  },
+  "status": "NATIVE_WINDOWS_EXECUTED_DEVELOPMENT233_PRODUCT_HOLD",
+  "baseline_checklist_recovered": true,
+  "baseline_260_features_reaudited": true,
+  "baseline_implemented_tested_count_last_observed": 230,
+  "open_features_last_observed": [
+    "F039",
+    "F046",
+    "F050",
+    "F090",
+    "F107",
+    "F108",
+    "F110",
+    "F114",
+    "F127",
+    "F134",
+    "F135",
+    "F139",
+    "F145",
+    "F146",
+    "F147",
+    "F150",
+    "F167",
+    "F177",
+    "F204",
+    "F205",
+    "F206",
+    "F207",
+    "F208",
+    "F230",
+    "F239",
+    "F241",
+    "F247",
+    "F248",
+    "F253",
+    "F254"
+  ],
+  "scope_changes": {
+    "F177": {
+      "status": "OUT_OF_SCOPE_NOT_A_PASS",
+      "reason": "macOS x86_64/ARM64/universal2 explicitly excluded by user",
+      "production_qualified": false
+    },
+    "F167": {
+      "status": "PARTIAL_NATIVE_SPAWN_PROVEN_RECORDED_SAFETY_FUTURE_GATES_OPEN",
+      "production_qualified": false
+    },
+    "F248": {
+      "status": "WINDOWS_X64_EXTERNAL_CI_NOT_RUN",
+      "reason": "Only Windows x64 CI required; workflow authored, no Github Actions run evidence yet",
+      "production_qualified": false
+    },
+    "F090": {
+      "status": "LINUX_ELF_UPDATER_NOT_WINDOWS_SUPPORTED",
+      "reason": "Needs genuine PE64, Authenticode, Windows locked-file atomic update and rollback",
+      "production_qualified": false
+    },
+    "F253": {
+      "status": "IMPLEMENTED_TESTED_FIXED_RUNTIME_SCOPE",
+      "scope": "Native Windows CPU/CUDA plus own legacy/ZIP checkpoints",
+      "source_sha256": "b3df4e0fa8d8cb19ba4f41b2801fcf8b7ea708df70b6cbaab95a3d87e356b705",
+      "evidence_directory": "evidence/windows_v029",
+      "production_qualified": false
+    },
+    "F254": {
+      "status": "IMPLEMENTED_TESTED_FIXED_RUNTIME_SCOPE",
+      "scope": "Native Windows CPU plus authorized WSL2 GPU graph/JIT",
+      "source_sha256": "690a44f17985aa541076cab579e58b8fba9a840f089e667202215095322de7c9",
+      "evidence_directory": "evidence/windows_v029",
+      "production_qualified": false
+    },
+    "F247": {
+      "status": "SCOPE_DECISION_REQUIRED_NOT_A_PASS",
+      "reason": "OCI/Windows container distribution may still be wanted; not silently removed",
+      "production_qualified": false
+    },
+    "F145": {
+      "status": "IMPLEMENTED_TESTED_BOUNDED_LOCAL_FIXTURES",
+      "binary_sha256": "595cf08ba7fe7dd8e4ad55fe3ed575cc5882ef722a1e4fd23f9da189827eb0d4",
+      "evidence": "evidence/windows_r6/CORE_VALIDATION.json",
+      "external_CI": "NOT_RUN",
+      "production_qualified": false
+    }
+  },
+  "quality_gates": {
+    "VEILIGHEID": "HOLD",
+    "CORRECTHEID": "HOLD",
+    "SNELHEID": "HOLD",
+    "BETROUWBAARHEID": "HOLD",
+    "COMPATIBILITEIT": "HOLD",
+    "TOEKOMSTBESTENDIGHEID": "HOLD"
+  },
+  "winner": null,
+  "verified_reserve": null,
+  "independent_audit": false,
+  "production_release_authorized": false,
+  "historical_scope_changes_v028": {
+    "F177": {
+      "status": "OUT_OF_SCOPE_NOT_A_PASS",
+      "reason": "macOS x86_64/ARM64/universal2 explicitly excluded by user",
+      "production_qualified": false
+    },
+    "F167": {
+      "status": "REQUIRES_WINDOWS_REDEFINITION_AND_NATIVE_EXECUTION",
+      "reason": "Windows supports multiprocessing spawn; Linux forkserver proof does not qualify Windows",
+      "production_qualified": false
+    },
+    "F248": {
+      "status": "WINDOWS_X64_EXTERNAL_CI_NOT_RUN",
+      "reason": "Only Windows x64 CI required; workflow authored, no Github Actions run evidence yet",
+      "production_qualified": false
+    },
+    "F090": {
+      "status": "LINUX_ELF_UPDATER_NOT_WINDOWS_SUPPORTED",
+      "reason": "Needs genuine PE64, Authenticode, Windows locked-file atomic update and rollback",
+      "production_qualified": false
+    },
+    "F253": {
+      "status": "NVIDIA_CUDA_HARDWARE_NOT_RUN",
+      "reason": "Standard Windows GitHub runner has no proven NVIDIA GPU; dedicated GPU runner required",
+      "production_qualified": false
+    },
+    "F254": {
+      "status": "NVIDIA_TF_JAX_RUNTIME_NOT_RUN",
+      "reason": "Actual accelerator stack and package installations not executed",
+      "production_qualified": false
+    },
+    "F247": {
+      "status": "SCOPE_DECISION_REQUIRED_NOT_A_PASS",
+      "reason": "OCI/Windows container distribution may still be wanted; not silently removed",
+      "production_qualified": false
+    }
+  },
+  "preparation_status_v028": "WINDOWS_V027_SOURCE_INTEGRATED_NO_NATIVE_RUNNER_RESULTS",
+  "current_implemented_tested_count": 233,
+  "current_open_features": [
+    "F039",
+    "F046",
+    "F050",
+    "F090",
+    "F107",
+    "F108",
+    "F110",
+    "F114",
+    "F127",
+    "F134",
+    "F135",
+    "F139",
+    "F146",
+    "F147",
+    "F150",
+    "F167",
+    "F177",
+    "F204",
+    "F205",
+    "F206",
+    "F207",
+    "F208",
+    "F230",
+    "F239",
+    "F241",
+    "F247",
+    "F248"
+  ]
+}

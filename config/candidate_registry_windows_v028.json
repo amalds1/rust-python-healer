@@ -1,0 +1,47 @@
+{
+  "schema_version": 1,
+  "selection_policy": "NO_EVIDENCE_NO_PASS; hard gates SAFETY and CORRECTNESS; no winner before all six gates PASS",
+  "target": "Windows 11 Home x64 with NVIDIA",
+  "roles_planned": 36,
+  "additional_ai_agent_processes_active_in_this_validation": 0,
+  "thresholds_defined_before_native_windows_trials": {
+    "curated_tests_per_actual_cpython_minor": 100,
+    "required_python_minors": ["3.9", "3.10", "3.11", "3.12", "3.13", "3.14", "3.15"],
+    "curated_failures_allowed": 0,
+    "runtime_identity_failures_allowed": 0,
+    "required_real_platform": "Windows 11 Home x64",
+    "gpu_gate": "real detected NVIDIA/CUDA hardware and frameworks; no simulated pass",
+    "rust_test_failures_allowed": 0,
+    "postgresql_or_package_api_coverage_assumed": false,
+    "speed_fts5_p95_max_ms": 50,
+    "speed_fresh_runs_minimum": 5,
+    "six_quality_gates": ["VEILIGHEID", "CORRECTHEID", "SNELHEID", "BETROUWBAARHEID", "COMPATIBILITEIT", "TOEKOMSTBESTENDIGHEID"]
+  },
+  "variants": [
+    {
+      "variant_id": "W028-HOSTED-SERVER2025-01",
+      "configuration": "GitHub hosted windows-2025 x64, seven minor independent CI jobs; no NVIDIA assumption",
+      "implementation": "AUTHORED_NOT_EXECUTED",
+      "code_sha256": "99dfa370851d7fb08289f7f1bad8853d295ae1d9769ef7796636846249809f77",
+      "technical_characteristics": ["fixed_100_case_fixture", "read_only_checkout", "evidence_upload_even_failure", "windows_server_not_home"],
+      "native_test_runs": 0,
+      "quality_gates": {"VEILIGHEID": "NOT_RUN", "CORRECTHEID": "NOT_RUN", "SNELHEID": "NOT_RUN", "BETROUWBAARHEID": "NOT_RUN", "COMPATIBILITEIT": "NOT_RUN", "TOEKOMSTBESTENDIGHEID": "NOT_RUN"},
+      "eligible_for_rank": false
+    },
+    {
+      "variant_id": "W028-WIN11HOME-DEDICATED-02",
+      "configuration": "Isolated dedicated Windows 11 Home x64 runner with verified NVIDIA hardware, exact OS/build and subprocess evidence",
+      "implementation": "DESIGN_ONLY_NOT_EXECUTED",
+      "code_sha256": null,
+      "technical_characteristics": ["native_home_edition", "nvidia_candidate", "requires_operator_owned_hardware", "isolation_unproven"],
+      "native_test_runs": 0,
+      "quality_gates": {"VEILIGHEID": "NOT_RUN", "CORRECTHEID": "NOT_RUN", "SNELHEID": "NOT_RUN", "BETROUWBAARHEID": "NOT_RUN", "COMPATIBILITEIT": "NOT_RUN", "TOEKOMSTBESTENDIGHEID": "NOT_RUN"},
+      "eligible_for_rank": false
+    }
+  ],
+  "duplicate_runs_as_retest_only": true,
+  "winner": null,
+  "verified_reserve": null,
+  "independent_security_audit": false,
+  "production_release_authorized": false
+}

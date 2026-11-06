@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "minimum_python": "3.9",
+  "latest_stable": "3.15.2",
+  "latest_source": "https://www.python.org/downloads/",
+  "verified_as_of": "2026-11-01",
+  "watch_packages": [
+    "ruff",
+    "uv",
+    "pytest",
+    "numpy",
+    "pandas"
+  ],
+  "auto_check_hours": 24
+}

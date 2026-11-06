@@ -1,0 +1,48 @@
+{
+  "schema_version": 1,
+  "source": "docs/ARCHITECTURE.md#36-specialistische-rollen",
+  "active_processes_declared": 0,
+  "roles": [
+    {"id":"R01","name":"Orchestrator","cluster":"Regie","capabilities":["task_planning","dependency_graph","routing"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":1,"quality_hint_percent":90,"cost_hint_units":5,"latency_hint_ms":5000},
+    {"id":"R02","name":"Requirements","cluster":"Regie","capabilities":["requirements","version_constraints"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"LOW","max_parallel":2,"quality_hint_percent":85,"cost_hint_units":3,"latency_hint_ms":3400},
+    {"id":"R03","name":"Threat modeling","cluster":"Regie","capabilities":["threat_model","security_rules"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":95,"cost_hint_units":7,"latency_hint_ms":6000},
+    {"id":"R04","name":"Budget","cluster":"Regie","capabilities":["budget","cost_tracking"],"model_hints":["gpt-6-luna","gpt-6.1-sol"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":84,"cost_hint_units":2,"latency_hint_ms":2600},
+    {"id":"R05","name":"Resource planning","cluster":"Regie","capabilities":["resource_planning","task_planning","latency_metrics"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":86,"cost_hint_units":4,"latency_hint_ms":3500},
+    {"id":"R06","name":"Releasebeheer","cluster":"Regie","capabilities":["release_review","signature_policy"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":93,"cost_hint_units":7,"latency_hint_ms":6200},
+
+    {"id":"R07","name":"Python-grammatica","cluster":"Diagnose","capabilities":["python_syntax","ast"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":91,"cost_hint_units":5,"latency_hint_ms":4600},
+    {"id":"R08","name":"Stdlib","cluster":"Diagnose","capabilities":["stdlib","python_docs"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"LOW","max_parallel":3,"quality_hint_percent":86,"cost_hint_units":3,"latency_hint_ms":2900},
+    {"id":"R09","name":"Typeanalyse","cluster":"Diagnose","capabilities":["type_analysis","ast"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":90,"cost_hint_units":6,"latency_hint_ms":5100},
+    {"id":"R10","name":"Imports/dependencies","cluster":"Diagnose","capabilities":["imports","dependency_graph","packaging"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":89,"cost_hint_units":5,"latency_hint_ms":4200},
+    {"id":"R11","name":"Traceback","cluster":"Diagnose","capabilities":["traceback","error_diagnosis"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"LOW","max_parallel":3,"quality_hint_percent":88,"cost_hint_units":3,"latency_hint_ms":3200},
+    {"id":"R12","name":"Testanalyse","cluster":"Diagnose","capabilities":["test_analysis","regression_tests"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":3,"quality_hint_percent":89,"cost_hint_units":4,"latency_hint_ms":3800},
+
+    {"id":"R13","name":"Ruff-fixes","cluster":"Herstel","capabilities":["ruff","syntax_repair"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":87,"cost_hint_units":4,"latency_hint_ms":2900},
+    {"id":"R14","name":"CST-transformaties","cluster":"Herstel","capabilities":["cst","format_preservation"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":93,"cost_hint_units":7,"latency_hint_ms":6400},
+    {"id":"R15","name":"AST-strategie","cluster":"Herstel","capabilities":["ast","repair_strategy"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":2,"quality_hint_percent":91,"cost_hint_units":6,"latency_hint_ms":5400},
+    {"id":"R16","name":"API-migratie","cluster":"Herstel","capabilities":["api_migration","version_constraints"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":92,"cost_hint_units":7,"latency_hint_ms":5900},
+    {"id":"R17","name":"Packaging","cluster":"Herstel","capabilities":["packaging","dependency_resolution"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":89,"cost_hint_units":6,"latency_hint_ms":4400},
+    {"id":"R18","name":"Conflictresolutie","cluster":"Herstel","capabilities":["conflict_resolution","repair_strategy"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":92,"cost_hint_units":7,"latency_hint_ms":5800},
+
+    {"id":"R19","name":"Python-documentatie","cluster":"Kennis","capabilities":["python_docs","documentation_index"],"model_hints":["gpt-6-luna","gpt-6.1-sol"],"risk_tier":"LOW","max_parallel":3,"quality_hint_percent":84,"cost_hint_units":2,"latency_hint_ms":2400},
+    {"id":"R20","name":"PEP-tracking","cluster":"Kennis","capabilities":["pep","version_constraints"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":89,"cost_hint_units":4,"latency_hint_ms":3900},
+    {"id":"R21","name":"PyPI-metadata","cluster":"Kennis","capabilities":["pypi_metadata","packaging"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"LOW","max_parallel":3,"quality_hint_percent":85,"cost_hint_units":3,"latency_hint_ms":3000},
+    {"id":"R22","name":"Package-docs","cluster":"Kennis","capabilities":["package_docs","documentation_index"],"model_hints":["gpt-6-luna","gpt-6.1-sol"],"risk_tier":"LOW","max_parallel":3,"quality_hint_percent":83,"cost_hint_units":2,"latency_hint_ms":2300},
+    {"id":"R23","name":"Changelogs","cluster":"Kennis","capabilities":["changelog","deprecations"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"LOW","max_parallel":2,"quality_hint_percent":85,"cost_hint_units":3,"latency_hint_ms":3100},
+    {"id":"R24","name":"Bronherkomst","cluster":"Kennis","capabilities":["provenance","source_licenses"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":92,"cost_hint_units":6,"latency_hint_ms":5300},
+
+    {"id":"R25","name":"FTS-index","cluster":"Data","capabilities":["fts","database_metrics"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":88,"cost_hint_units":3,"latency_hint_ms":3100},
+    {"id":"R26","name":"Vectors","cluster":"Data","capabilities":["vector_search","retrieval_validation"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":89,"cost_hint_units":6,"latency_hint_ms":5100},
+    {"id":"R27","name":"Dependency-graph","cluster":"Data","capabilities":["dependency_graph","graph_database"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":87,"cost_hint_units":4,"latency_hint_ms":3500},
+    {"id":"R28","name":"Hashregister","cluster":"Data","capabilities":["hash_registry","provenance"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":88,"cost_hint_units":3,"latency_hint_ms":3200},
+    {"id":"R29","name":"Sync/cache","cluster":"Data","capabilities":["update_sync","cache_integrity"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":87,"cost_hint_units":3,"latency_hint_ms":3500},
+    {"id":"R30","name":"Backup/audittrail","cluster":"Data","capabilities":["backup","audit_log"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":92,"cost_hint_units":6,"latency_hint_ms":4800},
+
+    {"id":"R31","name":"Correctheid","cluster":"QA","capabilities":["correctness_oracle","regression_tests"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":2,"quality_hint_percent":94,"cost_hint_units":7,"latency_hint_ms":6000},
+    {"id":"R32","name":"Sandbox/security","cluster":"QA","capabilities":["sandbox","threat_model","security_rules"],"model_hints":["gpt-6-astra","gpt-6.1-sol"],"risk_tier":"HIGH","max_parallel":1,"quality_hint_percent":95,"cost_hint_units":8,"latency_hint_ms":6200},
+    {"id":"R33","name":"Latency","cluster":"QA","capabilities":["latency_metrics","database_metrics"],"model_hints":["gpt-6.1-sol","gpt-6-luna"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":87,"cost_hint_units":3,"latency_hint_ms":3000},
+    {"id":"R34","name":"Reproduceerbaarheid","cluster":"QA","capabilities":["reproducibility","regression_tests"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":90,"cost_hint_units":5,"latency_hint_ms":4200},
+    {"id":"R35","name":"Compatibiliteit","cluster":"QA","capabilities":["compatibility","version_constraints"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":90,"cost_hint_units":5,"latency_hint_ms":4400},
+    {"id":"R36","name":"Futureproofing","cluster":"QA","capabilities":["future_readiness","update_sync"],"model_hints":["gpt-6.1-sol","gpt-6-astra"],"risk_tier":"MEDIUM","max_parallel":2,"quality_hint_percent":89,"cost_hint_units":4,"latency_hint_ms":4000}
+  ]
+}

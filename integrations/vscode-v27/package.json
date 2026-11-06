@@ -1,0 +1,38 @@
+{
+  "name": "rust-python-healer-reviewed-lsp",
+  "displayName": "Rust Python Healer — Reviewed Offline LSP",
+  "description": "Offline Python LSP client for signed, human-reviewed code actions; no automatic edits or network calls.",
+  "version": "0.27.0",
+  "publisher": "rust-python-healer-local",
+  "private": true,
+  "engines": { "vscode": "^1.85.0" },
+  "categories": ["Linters", "Other"],
+  "activationEvents": ["onLanguage:python", "onCommand:rphReviewed.loadApproval", "onCommand:rphReviewed.restartServer"],
+  "extensionKind": ["workspace"],
+  "main": "./extension.js",
+  "contributes": {
+    "commands": [
+      { "command": "rphReviewed.loadApproval", "title": "Rust Python Healer: Load Signed Reviewed Quickfix" },
+      { "command": "rphReviewed.restartServer", "title": "Rust Python Healer: Restart Offline LSP" }
+    ],
+    "configuration": {
+      "title": "Rust Python Healer Reviewed LSP",
+      "properties": {
+        "rphReviewed.pythonExecutable": {
+          "type": "string", "default": "", "scope": "machine",
+          "description": "Absolute path to Python 3.9–3.15 executable; leave empty to disable the client."
+        },
+        "rphReviewed.serverScript": {
+          "type": "string", "default": "", "scope": "machine",
+          "description": "Absolute path to the trusted installed python/developer_protocols_v21.py."
+        },
+        "rphReviewed.reviewKeyFile": {
+          "type": "string", "default": "", "scope": "machine",
+          "description": "Absolute path to a private 0600 review-verification key; never use a workspace-controlled key."
+        }
+      }
+    }
+  },
+  "scripts": { "test": "node --test tests/*.test.js" },
+  "license": "UNLICENSED"
+}

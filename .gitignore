@@ -1,0 +1,12 @@
+/target/
+/.rust-healer/
+/*.healed.py
+*.sqlite
+*.sqlite-shm
+*.sqlite-wal
+__pycache__/
+*.pyc
+suite.json
+/dist/
+.ruff_cache/
+

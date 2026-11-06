@@ -1,0 +1,17 @@
+{
+  "id": "rust-python-healer-reviewed-offline-v27",
+  "name": "Rust Python Healer — offline reviewed LSP",
+  "programArgs": {
+    "default": "python3 \"$PROJECT_DIR$/integrations/pycharm-v27/start_lsp.py\"",
+    "windows": "python \"$PROJECT_DIR$/integrations/pycharm-v27/start_lsp.py\""
+  },
+  "fileTypeMappings": [
+    {
+      "fileType": {
+        "name": "Python",
+        "patterns": ["*.py", "*.pyi"]
+      },
+      "languageId": "python"
+    }
+  ]
+}

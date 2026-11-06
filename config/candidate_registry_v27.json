@@ -1,0 +1,56 @@
+{
+  "schema_version": 1,
+  "selection_policy": "NO_EVIDENCE_NO_PASS_AND_NO_WINNER_UNLESS_ALL_SIX_GATES_PASS",
+  "thresholds": {
+    "repeat_count_minimum": 3,
+    "each_probe_wall_time_max_ms": 5000,
+    "each_probe_returncode": 0,
+    "future_stable_python_minor_required": "3.16",
+    "required_os": [
+      "Linux",
+      "Darwin",
+      "Windows"
+    ],
+    "required_python_minor": [
+      "3.9",
+      "3.10",
+      "3.11",
+      "3.12",
+      "3.13",
+      "3.14",
+      "3.15"
+    ]
+  },
+  "candidates": [
+    {
+      "variant_id": "F167-STRICT-01-WIN-R4",
+      "configuration": {
+        "requested": "default",
+        "fallback_intent": null
+      },
+      "source": "python/concurrency_probe.py",
+      "source_sha256": "5fc7478c8f4b61bef3d07202968735445913aa52fa54de33a8141e1be49a8d0f",
+      "technical_characteristics": [
+        "real_fixed_worker",
+        "fail_closed",
+        "no_fallback"
+      ],
+      "parent_variant_id": "F167-STRICT-01"
+    },
+    {
+      "variant_id": "F167-SPAWN-02-WIN-R4",
+      "configuration": {
+        "requested": "default",
+        "fallback_intent": "ALLOW_TRUSTED_SPAWN_FALLBACK"
+      },
+      "source": "python/concurrency_probe.py",
+      "source_sha256": "5fc7478c8f4b61bef3d07202968735445913aa52fa54de33a8141e1be49a8d0f",
+      "technical_characteristics": [
+        "real_fixed_worker",
+        "operator_opt_in",
+        "measured_spawn_fallback"
+      ],
+      "parent_variant_id": "F167-SPAWN-02"
+    }
+  ]
+}

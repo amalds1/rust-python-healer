@@ -1,0 +1,78 @@
+{
+  "schema_version": 1,
+  "primary_runtime_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20261026",
+  "primary_runtime_metadata_sha256": "20782a6200845c7029a5ba8bfa8b89fe8039779e8bbc0bc058b8bd05959aab14",
+  "runtimes": {
+    "3.9": {
+      "version": "3.9.25",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20251031/cpython-3.9.25%2B20251031-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 40204064,
+      "sha256": "4fb1b416482ce94d73cfa140317a670c596c830671d137b07c26afe8c461768a",
+      "executable_sha256": "ffed286d02cbd97203fad2ac6e147c954851548e06c699b25a8b68c1a18c99b6",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20251031",
+      "primary_metadata_sha256": "e52037f5c2451b30196b256f82bd938b1139613ae97670baf608a8d9435ed37e"
+    },
+    "3.10": {
+      "version": "3.10.21",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20260814/cpython-3.10.21%2B20260814-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 39625069,
+      "sha256": "9e2c77a2f2bfba3148b6e6c74679df571aa436d5b50113b01213fcd4cb803b70",
+      "executable_sha256": "ac1e17eba07f7f5fef1021f0b3539c8f765ed671cc2b33717ee7215d7967f7db",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20260814",
+      "primary_metadata_sha256": "835df14f5d85d4bef50f2809f32a758dd1c9a076c8077fdfa0d3429597a63896"
+    },
+    "3.11": {
+      "version": "3.11.18",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.11.18%2B20261026-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 48749854,
+      "sha256": "75cb501dc11c7b55c6b447c58e4910bce5b1f609f1017328b4f3a858dfaf5428",
+      "executable_sha256": "710181976fa9adb11f87b58126f39e38734cf96ae45b3d9a49b32322fe70ceb9",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20261026",
+      "primary_metadata_sha256": "20782a6200845c7029a5ba8bfa8b89fe8039779e8bbc0bc058b8bd05959aab14"
+    },
+    "3.12": {
+      "version": "3.12.16",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.12.16%2B20261026-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 47113364,
+      "sha256": "590dfcbe3a34c07301e6332e13e2188b98655cd072b08afa45a7998dc4c22bc5",
+      "executable_sha256": "246221b571e7a692a8b26818b628cac4c163e836de9897812eaebc2a8e1efa90",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20261026",
+      "primary_metadata_sha256": "20782a6200845c7029a5ba8bfa8b89fe8039779e8bbc0bc058b8bd05959aab14"
+    },
+    "3.13": {
+      "version": "3.13.18",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.13.18%2B20261026-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 48077770,
+      "sha256": "ebe90cc1dce2dd2d7afa1f0aa9b6c269c7c0174aeabdc6a801381602b7283424",
+      "executable_sha256": "d0a3fdb2f523217cc05cbfa015a249f53f670fe38c72522fa893377c5d2f17d5",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20261026",
+      "primary_metadata_sha256": "20782a6200845c7029a5ba8bfa8b89fe8039779e8bbc0bc058b8bd05959aab14"
+    },
+    "3.14": {
+      "version": "3.14.10",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.14.10%2B20261026-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 51031912,
+      "sha256": "98bbe6a0d798bcbad142e96e5930a330e4dc407638e898b515c51eb73a27580d",
+      "executable_sha256": "bcd8e6a0d88b5e9681e94bb4ce569ca1f76039e8ed9944ac7fcd13528d363cae",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20261026",
+      "primary_metadata_sha256": "20782a6200845c7029a5ba8bfa8b89fe8039779e8bbc0bc058b8bd05959aab14"
+    },
+    "3.15": {
+      "version": "3.15.2",
+      "url": "https://github.com/astral-sh/python-build-standalone/releases/download/20261026/cpython-3.15.2%2B20261026-x86_64-pc-windows-msvc-install_only.tar.gz",
+      "bytes": 53107795,
+      "sha256": "17769f04c4c8c228e9fb838a37d92f6a6401b170c5cd27fb3073f233f73bb2f9",
+      "executable_sha256": "f8272f38e992aa66c581e3b6a30837257d7571765f102e64f89b1c8b09b4c1cb",
+      "primary_metadata_url": "https://api.github.com/repos/astral-sh/python-build-standalone/releases/tags/20261026",
+      "primary_metadata_sha256": "20782a6200845c7029a5ba8bfa8b89fe8039779e8bbc0bc058b8bd05959aab14"
+    }
+  },
+  "ruff": {
+    "version": "0.17.4",
+    "metadata_url": "https://pypi.org/pypi/ruff/0.17.4/json",
+    "wheel_download_url": "https://files.pythonhosted.org/packages/bd/15/42af8a72d8946e3c9efd2bbf6641e462b6832783b0d043d63ef5b280ba7f/ruff-0.17.4-py3-none-win_amd64.whl",
+    "wheel_sha256": "67c5a894fc054cf41f75f7afa24815de5a74329d97634126c2a1015740ff4e8c",
+    "executable_member": "ruff-0.17.4.data/scripts/ruff.exe",
+    "executable_sha256": "0e71094b51a4241cb725e76e6375c55c8433dd06ec380ab987c970edd1618565"
+  }
+}

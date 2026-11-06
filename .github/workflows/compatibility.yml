@@ -1,0 +1,100 @@
+# Historical Linux recipe is manual-only for this Windows-only qualification.
+name: Python compatibility and Rust build
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  discover-versions:
+    runs-on: ubuntu-latest
+    outputs:
+      versions: ${{ steps.detect.outputs.versions }}
+    steps:
+      - uses: actions/checkout@v6
+      - id: detect
+        name: Read supported range from audited manifest
+        shell: bash
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          from pathlib import Path
+
+          manifest = json.loads(Path('config/versions.json').read_text())
+          first = int(manifest['minimum_python'].split('.')[1])
+          last = int(manifest['latest_stable'].split('.')[1])
+          if not 9 <= first <= last <= 99:
+              raise SystemExit('Invalid interpreter matrix')
+          versions = [f'3.{minor}' for minor in range(first, last + 1)]
+          with open(os.environ['GITHUB_OUTPUT'], 'a', encoding='utf-8') as result:
+              result.write('versions=' + json.dumps(versions) + '\n')
+          PY
+
+  python-compatibility:
+    needs: discover-versions
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ${{ fromJSON(needs.discover-versions.outputs.versions) }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-python@v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Execute exactly 100 distinct language/stdlib tests
+        shell: bash
+        run: |
+          python -I -S -B python/version_suite.py > suite.json
+          python -c "import json; s=json.load(open('suite.json')); assert s['cases']==100 and s['pass']==100 and s['fail']==0, s"
+      - name: Run helper, database and updater tests
+        run: python -m unittest discover -s tests -v
+      - name: Prevent undocumented source functions
+        run: python tools/audit_function_checklist.py --check
+
+  rust-check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v6
+      - name: Rust toolchain identity
+        run: cargo --version
+      - name: Compile and test
+        run: cargo test --all-targets
+      - name: Static lint
+        run: cargo clippy --all-targets -- -D warnings
+
+  rust-feature-matrix:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v6
+      - name: Set up uv for genuine CPython installations
+        uses: astral-sh/setup-uv@07a047e608db84b3d8c06cd9a7c7dcc9c355c18e # v10.3.2
+      - name: Install all versions from the release manifest, plus pinned Ruff
+        shell: bash
+        run: |
+          versions=$(python3 -c 'import json; d=json.load(open("config/versions.json")); a=int(d["minimum_python"].split(".")[1]); b=int(d["latest_stable"].split(".")[1]); print(" ".join(f"3.{n}" for n in range(a,b+1)))')
+          uv python install $versions
+          echo "$(uv python dir --bin)" >> "$GITHUB_PATH"
+          uv tool install ruff==0.17.3
+      - name: Build the actual Rust release binary
+        run: cargo build --release
+      - name: Test every Rust CLI feature against each real interpreter
+        shell: bash
+        run: |
+          python3 tools/feature_matrix.py \
+            --binary target/release/rust-python-healer \
+            --ruff "$(uv tool dir --bin)/ruff" \
+            --json evidence/FEATURE_MATRIX_ci.json
+      - name: Keep per-version test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-python-healer-feature-matrix
+          path: evidence/FEATURE_MATRIX_ci.json
+          if-no-files-found: warn
