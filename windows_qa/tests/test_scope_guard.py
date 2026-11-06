@@ -1,6 +1,7 @@
 """No Windows-only scope edit may silently manufacture a PASS."""
 
 import json
+from importlib.util import module_from_spec, spec_from_file_location
 from pathlib import Path
 import unittest
 
@@ -46,8 +47,19 @@ class WindowsScopeGuardTests(unittest.TestCase):
             self.assertEqual(self.scope["scope_changes"][item]["status"], "IMPLEMENTED_TESTED_FIXED_RUNTIME_SCOPE")
             self.assertEqual(len(self.scope["scope_changes"][item]["source_sha256"]), 64)
             self.assertFalse(self.scope["scope_changes"][item]["production_qualified"])
-        self.assertEqual(self.scope["current_implemented_tested_count"], 232)
-        self.assertEqual(len(self.scope["current_open_features"]), 28)
+        # Current scope follows the authoritative260-item checklist. Historical
+        # baseline counts above remain pinned; no new CI/GPU qualification follows.
+        spec = spec_from_file_location("scope_checklist_parser",
+                                      ROOT.parent / "tools" / "audit_function_checklist.py")
+        parser = module_from_spec(spec)
+        spec.loader.exec_module(parser)
+        items = parser.parse_checklist((ROOT.parent / "docs" / "FUNCTION_CHECKLIST.md").read_text(encoding="utf-8"))
+        self.assertEqual(len(items), 260)
+        expected_open = [item["id"] for item in items if item["status"] != "IMPLEMENTED_TESTED"]
+        self.assertEqual(self.scope["current_implemented_tested_count"],
+                         sum(item["status"] == "IMPLEMENTED_TESTED" for item in items))
+        self.assertEqual(self.scope["current_open_features"], expected_open)
+        self.assertEqual(len(set(self.scope["current_open_features"])), len(expected_open))
 
     def test_six_gates_fail_closed(self):
         gates = self.scope["quality_gates"]

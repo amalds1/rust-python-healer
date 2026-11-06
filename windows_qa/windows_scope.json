@@ -16,7 +16,7 @@
       "3.15"
     ]
   },
-  "status": "NATIVE_WINDOWS_EXECUTED_DEVELOPMENT233_PRODUCT_HOLD",
+  "status": "NATIVE_WINDOWS_EXECUTED_DEVELOPMENT235_PRODUCT_HOLD",
   "baseline_checklist_recovered": true,
   "baseline_260_features_reaudited": true,
   "baseline_implemented_tested_count_last_observed": 230,
@@ -59,7 +59,11 @@
       "production_qualified": false
     },
     "F167": {
-      "status": "PARTIAL_NATIVE_SPAWN_PROVEN_RECORDED_SAFETY_FUTURE_GATES_OPEN",
+      "status": "IMPLEMENTED_TESTED_BOUNDED_WINDOWS_RUNTIME_SCOPE",
+      "scope": "Seven stable Windows CPython minors plus exact primary-pinned3.16.0a1; spawn/IPC/error/timeout/cleanup and unsupported fork/forkserver oracles; no Linux execution claim.",
+      "contract_sha256": "9c45133b48b43c53ea67539b55048f427f8990cc13d090aee907732cb2983c01",
+      "evidence": "evidence/windows_r8/F167/contract.json",
+      "external_CI": "NOT_RUN",
       "production_qualified": false
     },
     "F248": {
@@ -95,6 +99,14 @@
       "status": "IMPLEMENTED_TESTED_BOUNDED_LOCAL_FIXTURES",
       "binary_sha256": "595cf08ba7fe7dd8e4ad55fe3ed575cc5882ef722a1e4fd23f9da189827eb0d4",
       "evidence": "evidence/windows_r6/CORE_VALIDATION.json",
+      "external_CI": "NOT_RUN",
+      "production_qualified": false
+    },
+    "F230": {
+      "status": "IMPLEMENTED_TESTED_BOUNDED_REAL_CORPUS_BENCHMARK",
+      "scope": "1050000real unique generic English educational document spans;5fresh Windows FTS measurement processes and actual R8 entrypoint; no ANN/API relevance/cold-cache qualification.",
+      "contract_sha256": "8569c379870a2f3365cee8730fbe59a290c86bb2aea67eb600e242ce3bfb718a",
+      "evidence": "evidence/windows_r8/F230/contract.json",
       "external_CI": "NOT_RUN",
       "production_qualified": false
     }
@@ -149,7 +161,7 @@
     }
   },
   "preparation_status_v028": "WINDOWS_V027_SOURCE_INTEGRATED_NO_NATIVE_RUNNER_RESULTS",
-  "current_implemented_tested_count": 233,
+  "current_implemented_tested_count": 235,
   "current_open_features": [
     "F039",
     "F046",
@@ -166,14 +178,12 @@
     "F146",
     "F147",
     "F150",
-    "F167",
     "F177",
     "F204",
     "F205",
     "F206",
     "F207",
     "F208",
-    "F230",
     "F239",
     "F241",
     "F247",
