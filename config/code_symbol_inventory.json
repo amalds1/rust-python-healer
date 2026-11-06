@@ -5320,6 +5320,11 @@
       "safe_parts",
       "unpack_runtime"
     ],
+    "windows_qa/crypto_fixed_diagnostic.py": [
+      "main",
+      "pinned",
+      "safe_failure"
+    ],
     "windows_qa/qualify_curated.py": [
       "main",
       "qualify"

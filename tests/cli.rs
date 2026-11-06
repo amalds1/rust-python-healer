@@ -304,7 +304,16 @@ fn version_regression_detects_tampered_baselines_without_running_project_code() 
     let mut manifest: Value =
         serde_json::from_str(include_str!("../config/version_regression_cases.json")).unwrap();
     let minor = report["python_minor"].as_str().unwrap();
-    manifest["versions"][minor]["traceback"]["sha256"] = Value::String("0".repeat(64));
+    let reference = if let Some(profile_id) = report["runtime_reference_profile"].as_str() {
+        let profiles = manifest["runtime_profiles"].as_array_mut().expect("exact profiles");
+        let matching: Vec<_> = profiles.iter_mut()
+            .filter(|profile| profile["id"].as_str() == Some(profile_id)).collect();
+        assert_eq!(matching.len(), 1, "exactly one active runtime reference");
+        &mut matching.into_iter().next().unwrap()["reference"]
+    } else {
+        &mut manifest["versions"][minor]
+    };
+    reference["traceback"]["sha256"] = Value::String("0".repeat(64));
     let modified = directory.path().join("tampered_regression.json");
     fs::write(&modified, manifest.to_string()).unwrap();
     let tampered = call(&[
@@ -1225,6 +1234,8 @@ fn wal_multiple_readers_writers_keep_fts_consistent() {
     let directory = tempdir().unwrap();
     let db = directory.path().join("wal-stress.sqlite");
     let conn = rusqlite::Connection::open(&db).unwrap();
+    let mode: String = conn.query_row("PRAGMA journal_mode=WAL", [], |row| row.get(0)).unwrap();
+    assert_eq!(mode.to_ascii_lowercase(), "wal", "exercise real WAL concurrency");
     conn.execute_batch(include_str!("../sql/knowledge.sql"))
         .unwrap();
     drop(conn);

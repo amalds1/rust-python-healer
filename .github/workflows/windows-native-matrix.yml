@@ -99,6 +99,11 @@ jobs:
       - name: Native Rust Windows-x64 structural preflight tests
         shell: pwsh
         run: cargo test --manifest-path windows_qa/Cargo.toml --offline
+      - name: Diagnose the fixed crypto selftest without raw paths or secrets
+        shell: pwsh
+        run: |
+          python -I -S -B windows_qa/crypto_fixed_diagnostic.py
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
       - name: Real main Rust project Windows compilation and tests
         shell: pwsh
         run: |
