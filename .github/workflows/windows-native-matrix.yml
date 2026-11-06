@@ -9,6 +9,7 @@ on:
       - "src/**"
       - "python/**"
       - "tests/**"
+      - "integrations/**"
       - "windows_qa/**"
       - ".github/workflows/windows-native-matrix.yml"
   pull_request:
@@ -18,6 +19,7 @@ on:
       - "src/**"
       - "python/**"
       - "tests/**"
+      - "integrations/**"
       - "windows_qa/**"
       - ".github/workflows/windows-native-matrix.yml"
 

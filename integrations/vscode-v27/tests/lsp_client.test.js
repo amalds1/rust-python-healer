@@ -11,18 +11,27 @@ const root = path.resolve(__dirname, '..', '..', '..');
 const server = path.join(root, 'python', 'developer_protocols_v21.py');
 const python = process.env.RPH_PYTHON || 'python3';
 const fixture = fs.mkdtempSync(path.join(root, '.rph-v27-client-'));
-const keyFile = path.join(fixture, 'private.key');
+const privateRoot = process.platform === 'win32' ? path.join(fixture, 'private-fixture') : fixture;
+const keyFile = path.join(privateRoot, 'private.key');
 const key = Buffer.from('32-byte-test-review-key-v27-no-real-secret');
-fs.writeFileSync(keyFile, key, { mode: 0o600 });
-fs.chmodSync(keyFile, 0o600);
+test.after(() => fs.rmSync(fixture, { recursive: true, force: true }));
+
+function nativeFixtureKey(file, payload, newRoot) {
+  const script = 'import importlib.util,pathlib,sys; s=importlib.util.spec_from_file_location("privacy_fixture",sys.argv[1]); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); m.private_fixture_root(pathlib.Path(sys.argv[2]).parent.parent) if sys.argv[3]=="new-root" else None; m.write_new_private_fixture(pathlib.Path(sys.argv[2]),sys.stdin.buffer.read())';
+  const result = require('node:child_process').spawnSync(python, ['-I', '-S', '-B', '-c', script, path.join(root, 'tests', 'windows_privacy_fixtures.py'), file, newRoot ? 'new-root' : 'new-leaf'], { input: payload, timeout: 8000 });
+  assert.equal(result.status, 0, 'native_private_fixture_creation_failed');
+}
+
+if (process.platform === 'win32') nativeFixtureKey(keyFile, key, true);
+else {
+  fs.writeFileSync(keyFile, key, { mode: 0o600 });
+  fs.chmodSync(keyFile, 0o600);
+}
 function fixtureAcl(file, publicRead) {
   const script = 'import importlib.util,sys; s=importlib.util.spec_from_file_location("privacy_fixture",sys.argv[1]); m=importlib.util.module_from_spec(s); s.loader.exec_module(m); (m.set_public_read_acl if sys.argv[3]=="public" else m.set_private_acl)(sys.argv[2])';
   const result = require('node:child_process').spawnSync(python, ['-I', '-S', '-B', '-c', script, path.join(root, 'tests', 'windows_privacy_fixtures.py'), file, publicRead ? 'public' : 'private']);
   assert.equal(result.status, 0, result.stderr.toString());
 }
-if (process.platform === 'win32') fixtureAcl(keyFile, false);
-
-test.after(() => fs.rmSync(fixture, { recursive: true, force: true }));
 
 async function client() {
   const c = new LspClient({ python, server, keyFile, timeoutMs: 3500 });
@@ -205,8 +214,9 @@ test('actual backend enforces 12-document memory budget', async () => {
 });
 
 test('actual backend refuses world-readable verification key', async () => {
-  const insecure = path.join(fixture, 'insecure.key');
-  fs.writeFileSync(insecure, key);
+  const insecure = path.join(privateRoot, 'insecure.key');
+  if (process.platform === 'win32') nativeFixtureKey(insecure, key, false);
+  else fs.writeFileSync(insecure, key);
   fs.chmodSync(insecure, 0o644);
   if (process.platform === 'win32') fixtureAcl(insecure, true);
   const c = new LspClient({ python, server, keyFile: insecure, timeoutMs: 1500 });
