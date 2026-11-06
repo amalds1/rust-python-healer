@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "note": "Curated CPython 3.9–3.15 regression baselines for four fixed syntax fixtures, three fixed bytecode fixtures and one trusted traceback fixture. Hashes are observations, not signed attestations. Exact local Windows3.15 RC/stable profiles preserve the legacy RC reference; executable hashes identify only local builds and are not publisher authentication.",
+  "note": "Curated CPython 3.9\u20133.15 regression baselines for four fixed syntax fixtures, three fixed bytecode fixtures and one trusted traceback fixture. Hashes are observations, not signed attestations. Exact local Windows3.15 RC/stable profiles preserve the legacy RC reference; executable hashes identify only local builds and are not publisher authentication.",
   "versions": {
     "3.9": {
       "ast": {
@@ -447,6 +447,66 @@
       "platform": "win32",
       "machine": "AMD64",
       "executable_sha256": "f8272f38e992aa66c581e3b6a30837257d7571765f102e64f89b1c8b09b4c1cb",
+      "reference": {
+        "ast": {
+          "function_fields": [
+            "name",
+            "args",
+            "body",
+            "decorator_list",
+            "returns",
+            "type_comment",
+            "type_params"
+          ],
+          "sha256": "c28d1880aff0a5d462afd545cb304a30d6f8334263fb6a549a35e47820b39c11",
+          "syntax_acceptance": {
+            "exception_groups": true,
+            "pattern_matching": true,
+            "template_strings": true,
+            "type_parameters": true
+          }
+        },
+        "bytecode": {
+          "branch_ops": [
+            "RESUME",
+            "LOAD_FAST_BORROW",
+            "LOAD_SMALL_INT",
+            "COMPARE_OP",
+            "POP_JUMP_IF_FALSE",
+            "NOT_TAKEN",
+            "LOAD_FAST_BORROW",
+            "LOAD_SMALL_INT",
+            "BINARY_OP",
+            "RETURN_VALUE",
+            "LOAD_COMMON_CONSTANT",
+            "RETURN_VALUE"
+          ],
+          "exception_table_bytes": 8,
+          "sha256": "45029a190317521ab82c78befb6208f7c20d745876615ccd22729a58a9d8eb57"
+        },
+        "traceback": {
+          "exception_notes_supported": true,
+          "frames": [
+            "regression_frame_outer",
+            "regression_frame_inner"
+          ],
+          "sha256": "f0fbc365debc8eb4503e41f11e3bfdebb4d0337f2bb27cadbbbfebbe9dbc48c3"
+        }
+      }
+    },
+    {
+      "id": "primary-cpython-3.15.2-20261026-windows-amd64",
+      "python_minor": "3.15",
+      "version": [
+        3,
+        15,
+        2
+      ],
+      "releaselevel": "final",
+      "serial": 0,
+      "platform": "win32",
+      "machine": "AMD64",
+      "executable_sha256": "431b0276e89f2339cf08ead7b164479dc3dfee2accb4ff947e55baf9e1be12cd",
       "reference": {
         "ast": {
           "function_fields": [
