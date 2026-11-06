@@ -27,14 +27,13 @@ class AuthenticatedCatalogTests(unittest.TestCase):
     def setUp(self):
         self.folder = tempfile.TemporaryDirectory(prefix="rph-v22-crypto-")
         self.addCleanup(self.folder.cleanup)
-        self.base = Path(self.folder.name)
-        if os.name == "nt":
-            privacy_fixtures.set_private_acl(self.base)
+        self.base = privacy_fixtures.private_fixture_root(self.folder.name)
         self.source = self.base / "source.sqlite"
         self.archive = self.base / "backup.aes"
         self.restored = self.base / "restored.sqlite"
         self.old_key = self.base / "old.key"
         self.new_key = self.base / "new.key"
+        privacy_fixtures.write_new_private_fixture(self.source)
         with closing(sqlite3.connect(str(self.source))) as db:
             db.execute("CREATE TABLE knowledge(k TEXT PRIMARY KEY, v TEXT)")
             db.execute("INSERT INTO knowledge VALUES (?,?)",
@@ -192,7 +191,7 @@ class AuthenticatedCatalogTests(unittest.TestCase):
 
     def test_restore_never_overwrites_existing_plaintext_database(self):
         self.backup()
-        self.restored.write_text("existing-private-application-content", encoding="utf-8")
+        privacy_fixtures.write_new_private_fixture(self.restored, b"existing-private-application-content")
         self.restored.chmod(0o600)
         with self.assertRaises(FileExistsError):
             crypto.restore_database(self.archive, self.restored, self.old_key)
@@ -322,7 +321,8 @@ class AuthenticatedCatalogTests(unittest.TestCase):
     def test_authenticated_but_disallowed_schema_restore_rejected(self):
         dump = (b"CREATE TABLE t(x);\n"
                 b"CREATE TRIGGER unsafe AFTER INSERT ON t BEGIN DELETE FROM t; END;\n")
-        self.archive.write_bytes(crypto.encrypt_bytes(dump, self.old_key.read_bytes()))
+        privacy_fixtures.write_new_private_fixture(
+            self.archive, crypto.encrypt_bytes(dump, self.old_key.read_bytes()))
         self.archive.chmod(0o600)
         with self.assertRaises(sqlite3.DatabaseError):
             crypto.restore_database(self.archive, self.restored, self.old_key)
@@ -335,7 +335,7 @@ class AuthenticatedCatalogTests(unittest.TestCase):
             self.backup()
 
     def test_archive_rejects_oversize_input_without_plaintext(self):
-        self.archive.touch(mode=0o600)
+        privacy_fixtures.write_new_private_fixture(self.archive)
         with self.archive.open("r+b") as stream:
             stream.truncate(crypto.MAX_ARCHIVE_BYTES + 1)
         with self.assertRaisesRegex(ValueError, "unsafe_private_encrypted_archive"):

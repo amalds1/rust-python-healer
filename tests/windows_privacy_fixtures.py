@@ -4,6 +4,8 @@ No production code imports this module. Callers own their temporary fixture
 roots; these helpers never enumerate or repair unrelated paths.
 """
 import ctypes
+import importlib.util
+import os
 from ctypes import wintypes
 from pathlib import Path
 import struct
@@ -142,3 +144,28 @@ def create_test_junction(path, target):
             raise ctypes.WinError(ctypes.get_last_error())
     finally:
         kernel.CloseHandle(handle)
+
+
+def _creation_platform():
+    path = Path(__file__).resolve().parents[1] / "python" / "platform_privacy_v028.py"
+    spec = importlib.util.spec_from_file_location("fixture_explicit_creation_platform", path)
+    module = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(module)
+    return module
+
+
+def private_fixture_root(folder):
+    """New child of this test's own temp root; no existing owner/DACL repair."""
+    if os.name == "nt":
+        return _creation_platform().create_private_directory(Path(folder) / "private-fixture")
+    return Path(folder)
+
+
+def write_new_private_fixture(path, payload=b""):
+    """Create only a new fixed test leaf; existing content never overwritten."""
+    if os.name == "nt":
+        fd = _creation_platform().create_private_file(path)
+    else:
+        fd = os.open(str(path), os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, "wb") as output:
+        output.write(payload)

@@ -14,6 +14,7 @@ import sys
 import tempfile
 import unittest
 from pathlib import Path
+import windows_privacy_fixtures as privacy_fixtures
 
 ROOT = Path(__file__).resolve().parents[1]
 VSCODE = ROOT / "integrations" / "vscode-v27"
@@ -94,12 +95,10 @@ class IdeClientPackagesV27(unittest.TestCase):
     def test_pycharm_launcher_uses_exact_local_backend(self):
         launcher = load_launcher()
         with tempfile.TemporaryDirectory(dir=str(ROOT)) as workspace:
+            workspace = privacy_fixtures.private_fixture_root(workspace)
             key = Path(workspace) / "private.key"
-            key.write_bytes(b"unit-test-private-review-key-v27")
+            privacy_fixtures.write_new_private_fixture(key, b"unit-test-private-review-key-v27")
             key.chmod(0o600)
-            if os.name == "nt":
-                import windows_privacy_fixtures
-                windows_privacy_fixtures.set_private_acl(key)
             old = os.environ.get("RPH_LSP_KEY_FILE")
             try:
                 os.environ["RPH_LSP_KEY_FILE"] = str(key)
@@ -132,12 +131,10 @@ class IdeClientPackagesV27(unittest.TestCase):
         launcher = load_launcher()
         old = os.environ.get("RPH_LSP_KEY_FILE")
         with tempfile.TemporaryDirectory(dir=str(ROOT)) as workspace:
+            workspace = privacy_fixtures.private_fixture_root(workspace)
             key = Path(workspace) / "private.key"
-            key.write_bytes(b"unit-test-private-review-key-v27")
+            privacy_fixtures.write_new_private_fixture(key, b"unit-test-private-review-key-v27")
             key.chmod(0o600)
-            if os.name == "nt":
-                import windows_privacy_fixtures
-                windows_privacy_fixtures.set_private_acl(key)
             link = Path(workspace) / "link.key"
             link.symlink_to(key)
             try:
@@ -146,7 +143,7 @@ class IdeClientPackagesV27(unittest.TestCase):
                     launcher.checked_launch()
                 key.chmod(stat.S_IRUSR | stat.S_IWUSR | stat.S_IRGRP)
                 if os.name == "nt":
-                    windows_privacy_fixtures.set_public_read_acl(key)
+                    privacy_fixtures.set_public_read_acl(key)
                 os.environ["RPH_LSP_KEY_FILE"] = str(key)
                 with self.assertRaisesRegex(ValueError, "review_key_must_be_private"):
                     launcher.checked_launch()
@@ -160,12 +157,10 @@ class IdeClientPackagesV27(unittest.TestCase):
         launcher = load_launcher()
         old = os.environ.get("RPH_LSP_KEY_FILE")
         with tempfile.TemporaryDirectory(dir=str(ROOT)) as workspace:
+            workspace = privacy_fixtures.private_fixture_root(workspace)
             key = Path(workspace) / "short.key"
-            key.write_bytes(b"too-short")
+            privacy_fixtures.write_new_private_fixture(key, b"too-short")
             key.chmod(0o600)
-            if os.name == "nt":
-                import windows_privacy_fixtures
-                windows_privacy_fixtures.set_private_acl(key)
             try:
                 os.environ["RPH_LSP_KEY_FILE"] = str(key)
                 with self.assertRaisesRegex(ValueError, "invalid_private_key"):
@@ -178,12 +173,10 @@ class IdeClientPackagesV27(unittest.TestCase):
 
     def test_pycharm_launcher_real_stdio_initialize_shutdown(self):
         with tempfile.TemporaryDirectory(dir=str(ROOT)) as workspace:
+            workspace = privacy_fixtures.private_fixture_root(workspace)
             key = Path(workspace) / "private.key"
-            key.write_bytes(b"unit-test-private-review-key-v27")
+            privacy_fixtures.write_new_private_fixture(key, b"unit-test-private-review-key-v27")
             key.chmod(0o600)
-            if os.name == "nt":
-                import windows_privacy_fixtures
-                windows_privacy_fixtures.set_private_acl(key)
             env = os.environ.copy()
             env["RPH_LSP_KEY_FILE"] = str(key)
             requests = b"".join((

@@ -267,7 +267,8 @@ def create_key(path):
     path = Path(path)
     _private_directory(path.parent)
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    fd = os.open(str(path), flags, 0o600)
+    fd = (platform_privacy.create_private_file(path) if os.name == "nt"
+          else os.open(str(path), flags, 0o600))
     with os.fdopen(fd, "wb") as output:
         if os.name == "nt":
             platform_privacy.private_descriptor(output.fileno(), "unsafe_private_key")
@@ -288,7 +289,8 @@ def _new_private_file(path, payload):
     path = Path(path)
     _private_directory(path.parent)
     flags = os.O_WRONLY | os.O_CREAT | os.O_EXCL | getattr(os, "O_NOFOLLOW", 0)
-    fd = os.open(str(path), flags, 0o600)
+    fd = (platform_privacy.create_private_file(path) if os.name == "nt"
+          else os.open(str(path), flags, 0o600))
     try:
         with os.fdopen(fd, "wb") as output:
             if os.name == "nt":
@@ -391,7 +393,8 @@ def restore_database(encrypted_archive, destination_database, key_file):
     _private_directory(destination.parent)
     flags = os.O_CREAT | os.O_EXCL | os.O_WRONLY | getattr(os, "O_NOFOLLOW", 0)
     try:
-        fd = os.open(str(destination), flags, 0o600)
+        fd = (platform_privacy.create_private_file(destination) if os.name == "nt"
+              else os.open(str(destination), flags, 0o600))
     except BaseException:
         memory.close()
         raise
@@ -450,11 +453,19 @@ def trusted_selftest():
         return {"status": "NOT_SUPPORTED_MISSING_CRYPTO_BACKEND"}
     with tempfile.TemporaryDirectory(prefix="rph-v22-db-crypto-") as folder:
         base = Path(folder)
+        if os.name == "nt":
+            base = platform_privacy.create_private_directory(base / "private-catalog")
         database = base / "source.sqlite"
         old_key = base / "old.key"
         new_key = base / "new.key"
         archive = base / "backup.aes"
         restored = base / "restored.sqlite"
+        if os.name == "nt":
+            fd = platform_privacy.create_private_file(database)
+            try:
+                platform_privacy.private_descriptor(fd, "unsafe_private_source_database")
+            finally:
+                os.close(fd)
         with closing(sqlite3.connect(str(database))) as db:
             db.execute("CREATE TABLE facts(id INTEGER PRIMARY KEY, value TEXT)")
             db.execute("INSERT INTO facts VALUES (1, 'trusted-fixture')")

@@ -778,6 +778,11 @@
       "verify_native_wheel_bytes"
     ],
     "python/platform_privacy_v028.py": [
+      "_discard_created_handle",
+      "_private_creation_attributes",
+      "_private_new_path",
+      "create_private_directory",
+      "create_private_file",
       "flush_file",
       "private_descriptor",
       "private_directory",
@@ -5138,16 +5143,19 @@
       "source"
     ],
     "tests/windows_privacy_fixtures.py": [
+      "_creation_platform",
       "_descriptor",
       "_fixture_libraries",
       "create_private_directory",
       "create_test_junction",
       "current_user_sid_string",
+      "private_fixture_root",
       "private_sddl",
       "set_null_dacl",
       "set_private_acl",
       "set_public_read_acl",
-      "set_test_sddl"
+      "set_test_sddl",
+      "write_new_private_fixture"
     ],
     "tools/audit_function_checklist.py": [
       "audit",
@@ -5417,6 +5425,17 @@
     "windows_qa/windows_runtime.py": [
       "inspect_runtime",
       "main"
+    ],
+    "tests/test_platform_private_creation.py": [
+      "NativePrivateCreationTests.setUp",
+      "NativePrivateCreationTests.test_descriptor_transfer_failure_deletes_only_created_handle",
+      "NativePrivateCreationTests.test_existing_directory_is_not_repaired",
+      "NativePrivateCreationTests.test_existing_file_is_not_overwritten",
+      "NativePrivateCreationTests.test_explicit_directory_owner_and_inherited_private_file",
+      "NativePrivateCreationTests.test_owner_mismatch_still_fails_without_repair",
+      "NativePrivateCreationTests.test_rejected_postcreate_handle_is_deleted_without_neighbor_changes",
+      "NativePrivateCreationTests.test_rejected_postcreate_handle_is_deleted_without_neighbor_changes.inspect",
+      "NativePrivateCreationTests.test_unsafe_component_is_rejected_without_creation"
     ]
   },
   "cli_commands": {

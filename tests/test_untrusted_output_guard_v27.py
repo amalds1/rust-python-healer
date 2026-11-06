@@ -67,10 +67,9 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def subprocess_verify(self, request, key_mode=0o600, raw_request=None):
         with tempfile.TemporaryDirectory(prefix="rph-v27-f208-") as folder:
-            if os.name == "nt":
-                privacy_fixtures.set_private_acl(folder)
+            folder = privacy_fixtures.private_fixture_root(folder)
             key_path = Path(folder) / "operator.key"
-            key_path.write_bytes(self.KEY)
+            privacy_fixtures.write_new_private_fixture(key_path, self.KEY)
             if os.name == "nt":
                 if key_mode != 0o600:
                     privacy_fixtures.set_public_read_acl(key_path)
@@ -411,9 +410,10 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def test_operator_key_symlink_is_rejected(self):
         with tempfile.TemporaryDirectory(prefix="rph-f208-key-symlink-") as folder:
+            folder = privacy_fixtures.private_fixture_root(folder)
             real = Path(folder) / "real.key"
             link = Path(folder) / "alias.key"
-            real.write_bytes(self.KEY)
+            privacy_fixtures.write_new_private_fixture(real, self.KEY)
             real.chmod(0o600)
             link.symlink_to(real)
             self.rejected(
@@ -423,7 +423,8 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def test_operator_key_hardlink_is_rejected_before_read(self):
         with tempfile.TemporaryDirectory(prefix="rph-f208-key-hardlink-") as folder:
-            key = Path(folder) / "operator.key"; key.write_bytes(self.KEY)
+            folder = privacy_fixtures.private_fixture_root(folder)
+            key = Path(folder) / "operator.key"; privacy_fixtures.write_new_private_fixture(key, self.KEY)
             key.chmod(0o600)
             os.link(key, Path(folder) / "alias.key")
             with mock.patch.object(guard.os, "read", side_effect=AssertionError("key must not be read")):
@@ -431,8 +432,9 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def test_same_original_key_inode_through_swapped_leaf_symlink_is_rejected(self):
         with tempfile.TemporaryDirectory(prefix="rph-f208-key-race-") as folder:
+            folder = privacy_fixtures.private_fixture_root(folder)
             key = Path(folder) / "operator.key"; backing = Path(folder) / "backing.key"
-            key.write_bytes(self.KEY); key.chmod(0o600)
+            privacy_fixtures.write_new_private_fixture(key, self.KEY); key.chmod(0o600)
             if os.name == "nt":
                 privacy = guard._windows_privacy()
                 original_open = privacy.open_private_readonly
@@ -451,7 +453,8 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def test_final_key_identity_size_mtime_and_linkcount_are_checked(self):
         with tempfile.TemporaryDirectory(prefix="rph-f208-key-final-stat-") as folder:
-            key = Path(folder) / "operator.key"; key.write_bytes(self.KEY); key.chmod(0o600)
+            folder = privacy_fixtures.private_fixture_root(folder)
+            key = Path(folder) / "operator.key"; privacy_fixtures.write_new_private_fixture(key, self.KEY); key.chmod(0o600)
             if os.name == "nt":
                 guard._windows_privacy()
             original_fstat = guard.os.fstat
@@ -470,7 +473,8 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def test_read_failure_closes_actual_key_descriptor(self):
         with tempfile.TemporaryDirectory(prefix="rph-f208-key-close-") as folder:
-            key = Path(folder) / "operator.key"; key.write_bytes(self.KEY); key.chmod(0o600)
+            folder = privacy_fixtures.private_fixture_root(folder)
+            key = Path(folder) / "operator.key"; privacy_fixtures.write_new_private_fixture(key, self.KEY); key.chmod(0o600)
             opened = []
             if os.name == "nt":
                 boundary, attribute = guard._windows_privacy(), "open_private_readonly"
@@ -489,7 +493,8 @@ class ToolOutputGuardTests(unittest.TestCase):
 
     def test_concurrent_key_mutation_is_refused_or_detected(self):
         with tempfile.TemporaryDirectory(prefix="rph-f208-key-mutation-") as folder:
-            key = Path(folder) / "operator.key"; key.write_bytes(self.KEY); key.chmod(0o600)
+            folder = privacy_fixtures.private_fixture_root(folder)
+            key = Path(folder) / "operator.key"; privacy_fixtures.write_new_private_fixture(key, self.KEY); key.chmod(0o600)
             original_read = guard.os.read
             def attempt(fd, maximum):
                 if os.name == "nt":
